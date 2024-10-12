@@ -1,0 +1,36 @@
+{
+  "name": "peslac",
+  "version": "1.0.0",
+  "description": "A Node.js package to interact with the Peslac API.",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon peslac.js",
+    "start": "node peslac.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/peslacinc/peslac-js-sdk.git"
+  },
+  "keywords": [
+    "peslac",
+    "api",
+    "documents",
+    "tools",
+    "nodejs",
+    "rag",
+    "ai",
+    "llm"
+  ],
+  "author": "Jibril Kala",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  },
+  "dependencies": {
+    "axios": "^1.7.7",
+    "dotenv": "^16.4.5",
+    "form-data": "^4.0.1",
+    "terser": "^5.34.1"
+  }
+}
