@@ -1,8 +1,8 @@
 {
   "name": "peslac",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "A Node.js package to interact with the Peslac API.",
-  "main": "client.js",
+  "main": "peslac.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon peslac.js",
