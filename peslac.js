@@ -35,7 +35,7 @@ class Peslac {
   // }
 
   // Get document
-  async getDocument(documentId) {
+  async retrieveDocument(documentId) {
     try {
       const response = await this.api.get(`/documents/${documentId}`);
       return response.data;

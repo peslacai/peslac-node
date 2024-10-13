@@ -65,6 +65,38 @@ app.post('/api/v1/tools/use', upload.single('file'), async (req, res) => {
 });
 ```
 
+# Retrieve a document
+
+### Retrieve a document
+
+To retrieve a document that has been previously uploaded to Peslac, you can use the `retrieveDocument` method. Here's an example:
+
+```javascript
+const express = require('express');
+const Peslac = require('peslac'); // Import the Peslac package
+
+const app = express();
+
+const client = new Peslac('your-api-key-here'); // Initialize Peslac client
+
+// Route to upload a file and use a tool
+app.get('/documents/:documentId', async (req, res) => {
+  const { documentId } = req.params;
+  try {
+    const result = await client.retrieveDocument(documentId);
+    res.status(200).json({
+      success: true,
+      data: result,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      error: error.message, // Handle any errors
+    });
+  }
+});
+```
+
 ## API Reference
 
 ### `new Peslac(apiKey)`
