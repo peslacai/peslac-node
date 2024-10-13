@@ -73,26 +73,24 @@ Creates a new instance of the Peslac client.
 
 - `apiKey` (string): Your Peslac API key.
 
-### `client.upload({ file })`
-
 Uploads a document to the Peslac API.
 
 - `file` (string): Path to the file you want to upload.
 
 Returns a Promise that resolves with the upload result.
 
-### `client.useTool({ file, toolId })`
+### `client.useTool({ file, tool_Id })`
 
 Uses an AI-powered tool on a document.
 
 - `file` (string): Path to the file you want to process.
-- `toolId` (string): ID of the tool you want to use.
+- `tool_Id` (string): ID of the tool you want to use.
 
 Returns a Promise that resolves with the tool usage result.
 
 ## Error Handling
 
-Both `upload` and `useTool` methods throw errors if the operations fail. It's recommended to use try-catch blocks or `.catch()` methods when calling these functions, as shown in the example above.
+`useTool` method throw errors if the operations fail. It's recommended to use try-catch blocks or `.catch()` methods when calling these functions, as shown in the example above.
 
 ## License
 
