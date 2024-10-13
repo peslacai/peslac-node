@@ -9,39 +9,94 @@ class Peslac {
     this.api = axios.create({
       baseURL: config.apiBaseUrl, // Load from config
       headers: {
-        Authorization: `Bearer ${this.apiKey}`,
+        'X-API-Key': this.apiKey,
       },
     });
   }
 
   // Upload document
-  async upload({ file }) {
-    try {
-      const formData = new FormData();
-      formData.append('file', fs.createReadStream(file));
+  // async upload(file) {
+  //   try {
+  //     const formData = new FormData();
+  //     formData.append(
+  //       'file',
+  //       this._getFileBuffer(file),
+  //       this._getFileName(file)
+  //     );
 
-      const response = await this.api.post('/documents', formData, {
-        headers: formData.getHeaders(),
-      });
+  //     const response = await this.api.post('/documents', formData, {
+  //       headers: formData.getHeaders(),
+  //     });
+  //     return response.data;
+  //   } catch (error) {
+  //     throw new Error(`Upload failed: ${error.message}`);
+  //   }
+  // }
+
+  // Get document
+  async getDocument(documentId) {
+    try {
+      const response = await this.api.get(`/documents/${documentId}`);
       return response.data;
     } catch (error) {
-      throw new Error(`Upload failed: ${error.message}`);
+      throw new Error(error.response?.data?.message);
     }
   }
 
   // Use a tool with file and toolId
-  async useTool({ file, toolId }) {
+  async useTool(file, tool_id) {
     try {
       const formData = new FormData();
-      formData.append('file', fs.createReadStream(file));
-      formData.append('toolId', toolId);
+      formData.append(
+        'file',
+        this._getFileBuffer(file),
+        this._getFileName(file)
+      );
+      formData.append('tool_id', tool_id);
 
       const response = await this.api.post('/tools/use', formData, {
         headers: formData.getHeaders(),
       });
       return response.data;
     } catch (error) {
-      throw new Error(`Tool usage failed: ${error.message}`);
+      throw new Error(error.response?.data?.message);
+    }
+  }
+
+  // Use a tool with url and toolId
+  async useToolWithFileUrl(fileUrl, tool_id) {
+    try {
+      const response = await this.api.post('/tools/use', {
+        fileUrl,
+        tool_id,
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message);
+    }
+  }
+
+  _getFileBuffer(file) {
+    if (typeof file === 'string') {
+      return fs.readFileSync(file);
+    } else if (file instanceof Buffer) {
+      return file;
+    } else if (file && file.buffer) {
+      return file.buffer;
+    } else {
+      throw new Error(
+        'Invalid file input. Expected a file path, Buffer, or multer file object.'
+      );
+    }
+  }
+
+  _getFileName(file) {
+    if (typeof file === 'string') {
+      return file.split('/').pop();
+    } else if (file && file.originalname) {
+      return file.originalname;
+    } else {
+      return 'file';
     }
   }
 }

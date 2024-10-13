@@ -1,6 +1,6 @@
 {
   "name": "peslac",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A Node.js package to interact with the Peslac API.",
   "main": "peslac.js",
   "scripts": {
@@ -30,7 +30,9 @@
   "dependencies": {
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "form-data": "^4.0.1",
+    "multer": "^1.4.5-lts.1",
     "terser": "^5.34.1"
   }
 }

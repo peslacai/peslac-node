@@ -24,27 +24,45 @@ const client = new Peslac('your-api-key-here');
 
 Here's a complete example demonstrating how to upload a document and use a tool:
 
+First, make sure you have multer installed:
+
+```bash
+npm install multer
+```
+
 ```javascript
-const Peslac = require('peslac');
+const express = require('express');
+const multer = require('multer');
+const Peslac = require('peslac'); // Import the Peslac package
 
-const client = new Peslac('your-api-key-here');
+const app = express();
+const upload = multer({ dest: 'uploads/' }); // Configure Multer
 
-(async () => {
+const client = new Peslac('your-api-key-here'); // Initialize Peslac client
+
+// Route to upload a file and use a tool
+app.post('/api/v1/tools/use', upload.single('file'), async (req, res) => {
+  const { tool_id, file } = req.body;
   try {
-    // Upload a file
-    const uploadResponse = await client.upload({ file: 'path/to/file.pdf' });
-    console.log('Uploaded:', uploadResponse);
+    // Validate the request body
+    if (file || tool_id) {
+      return res.status(400).json({
+        success: false,
+        message: 'File and tool_id are required',
+      });
+    }
 
-    // Use a tool
-    const toolResponse = await client.useTool({
-      file: 'path/to/file.pdf',
-      toolId: 'tool-id-here',
-    });
-    console.log('Tool Response:', toolResponse);
+    // Use the tool with the uploaded file and provided tool_id
+    const result = await client.useTool(req.file, req.body.tool_id);
+
+    res.status(200).json(result); // Send success response
   } catch (error) {
-    console.error('Error:', error.message);
+    res.status(500).json({
+      success: false,
+      error: error.message, // Handle any errors
+    });
   }
-})();
+});
 ```
 
 ## API Reference
