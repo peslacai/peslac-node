@@ -1,3 +1,4 @@
+require('dotenv').config();
 const axios = require('axios');
 const fs = require('fs');
 const FormData = require('form-data'); // Import FormData
@@ -47,15 +48,14 @@ class Peslac {
   async useTool(file, tool_id) {
     try {
       const formData = new FormData();
-      formData.append(
-        'file',
-        this._getFileBuffer(file),
-        this._getFileName(file)
-      );
+      formData.append('file', fs.createReadStream(file.path), {
+        filename: file.originalname,
+        contentType: file.mimetype,
+      });
       formData.append('tool_id', tool_id);
 
       const response = await this.api.post('/tools/use', formData, {
-        headers: formData.getHeaders(),
+        ...formData.getHeaders(),
       });
       return response.data;
     } catch (error) {
