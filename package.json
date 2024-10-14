@@ -1,6 +1,6 @@
 {
   "name": "peslac",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "description": "A Node.js package to interact with the Peslac API for document processing.",
   "main": "peslac.js",
   "repository": {
@@ -15,13 +15,33 @@
     "nodejs",
     "rag",
     "ai",
-    "llm"
+    "llm",
+    "remote-file",
+    "remote-file-processing",
+    "document-processing",
+    "file-processing",
+    "ocr",
+    "image-processing",
+    "pdf-processing",
+    "document-ocr",
+    "image-ocr",
+    "pdf-ocr",
+    "document-processing",
+    "image-processing",
+    "pdf-processing",
+    "pdf-splitter",
+    "pdf-merger",
+    "pdf-splitter",
+    "pdf-merger",
+    "pdf-splitter",
+    "pdf-merger",
+    "pdf-splitter",
+    "pdf-merger",
+    "pdf-splitter",
+    "pdf-merger"
   ],
   "author": "Jibril Kala",
   "license": "MIT",
-  "devDependencies": {
-    "nodemon": "^3.1.7"
-  },
   "dependencies": {
     "axios": "^1.7.7",
     "dotenv": "^16.4.5",

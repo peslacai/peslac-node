@@ -66,7 +66,7 @@ class Peslac {
   // Use a tool with url and toolId
   async useToolWithFileUrl(fileUrl, tool_id) {
     try {
-      const response = await this.api.post('/tools/use', {
+      const response = await this.api.post('/tools/use-url', {
         fileUrl,
         tool_id,
       });
