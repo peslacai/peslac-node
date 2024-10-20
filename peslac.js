@@ -76,6 +76,32 @@ class Peslac {
     }
   }
 
+  async submitBankStatement(file, typeOfAccount, currency) {
+    try {
+      const formData = new FormData();
+      formData.append('file', fs.createReadStream(file.path), {
+        filename: file.originalname,
+        contentType: file.mimetype,
+      });
+      formData.append('type_of_account', typeOfAccount);
+      formData.append('currency', currency);
+
+      const response = await this.api.post('/bank-statements/pdf', formData, {
+        ...formData.getHeaders(),
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(
+        error.response?.data?.message || 'Failed to submit bank statement'
+      );
+    }
+  }
+
+  async getBankStatement(documentId) {
+    const response = await this.api.get(`/bank-statements/${documentId}`);
+    return response.data;
+  }
+
   _getFileBuffer(file) {
     if (typeof file === 'string') {
       return fs.readFileSync(file);

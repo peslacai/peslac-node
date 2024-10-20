@@ -1,6 +1,6 @@
 {
   "name": "peslac",
-  "version": "1.0.9",
+  "version": "1.1.0",
   "description": "A Node.js package to interact with the Peslac API for document processing.",
   "main": "peslac.js",
   "repository": {
