@@ -97,7 +97,7 @@ class Peslac {
     }
   }
 
-  async getBankStatement(documentId) {
+  async retrieveBankStatement(documentId) {
     const response = await this.api.get(`/bank-statements/${documentId}`);
     return response.data;
   }
