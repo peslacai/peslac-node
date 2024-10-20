@@ -10,7 +10,7 @@ class Peslac {
     this.api = axios.create({
       baseURL: config.apiBaseUrl, // Load from config
       headers: {
-        'X-API-Key': this.apiKey,
+        Authorization: `Bearer ${this.apiKey}`,
       },
     });
   }
@@ -46,6 +46,9 @@ class Peslac {
 
   // Use a tool with file and toolId
   async useTool(file, tool_id) {
+    if (!file || !file.path || !file.originalname || !file.mimetype) {
+      throw new Error('Invalid file object');
+    }
     try {
       const formData = new FormData();
       formData.append('file', fs.createReadStream(file.path), {
@@ -78,6 +81,10 @@ class Peslac {
 
   async submitBankStatement(file, typeOfAccount, currency) {
     try {
+      if (!file || !file.path || !file.originalname || !file.mimetype) {
+        throw new Error('Invalid file object');
+      }
+
       const formData = new FormData();
       formData.append('file', fs.createReadStream(file.path), {
         filename: file.originalname,
@@ -87,19 +94,24 @@ class Peslac {
       formData.append('currency', currency);
 
       const response = await this.api.post('/bank-statements/pdf', formData, {
-        ...formData.getHeaders(),
+        headers: formData.getHeaders(),
       });
       return response.data;
     } catch (error) {
-      throw new Error(
-        error.response?.data?.message || 'Failed to submit bank statement'
-      );
+      throw new Error(error.response?.data?.message);
     }
   }
 
   async retrieveBankStatement(documentId) {
-    const response = await this.api.get(`/bank-statements/${documentId}`);
-    return response.data;
+    if (!documentId) {
+      throw new Error('Document ID is required');
+    }
+    try {
+      const response = await this.api.get(`/bank-statements/${documentId}`);
+      return response.data;
+    } catch (error) {
+      throw new Error(error.response?.data?.message);
+    }
   }
 
   _getFileBuffer(file) {
