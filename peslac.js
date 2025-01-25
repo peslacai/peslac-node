@@ -15,25 +15,6 @@ class Peslac {
     });
   }
 
-  // Upload document
-  // async upload(file) {
-  //   try {
-  //     const formData = new FormData();
-  //     formData.append(
-  //       'file',
-  //       this._getFileBuffer(file),
-  //       this._getFileName(file)
-  //     );
-
-  //     const response = await this.api.post('/documents', formData, {
-  //       headers: formData.getHeaders(),
-  //     });
-  //     return response.data;
-  //   } catch (error) {
-  //     throw new Error(`Upload failed: ${error.message}`);
-  //   }
-  // }
-
   // Get document
   async retrieveDocument(documentId) {
     try {
